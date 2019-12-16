@@ -8,6 +8,15 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name: 'app',
+    mounted() {
+      this.$store.dispatch('loadVideos')
+    }
+  }
+</script>
+
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -28,5 +37,15 @@
       color: #42b983;
     }
   }
+}
+
+.tag-button {
+  padding: 5px;
+  margin: 3px;
+  font-size: 16px;
+  background-color: #72c9a2;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 </style>

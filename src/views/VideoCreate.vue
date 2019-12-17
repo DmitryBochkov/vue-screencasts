@@ -4,46 +4,31 @@
       <v-col cols="12" md="6">
         <h1>Video Create page</h1>
         <v-form class="text-left">
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                v-model="video.name"
-                label="Name"
-                required
-                ></v-text-field>
-              </v-col>
+          <v-text-field
+            v-model="video.name"
+            label="Name"
+            required
+          ></v-text-field>
 
-              <v-col cols="12">
-                <v-text-field
-                  v-model="video.description"
-                  label="Description"
-                  required
-                ></v-text-field>
-              </v-col>
+          <v-textarea
+            v-model="video.description"
+            label="Description"
+            required
+          ></v-textarea>
 
-              <v-col cols="12">
-                <v-text-field
-                  v-model="video.thumbnail"
-                  label="Thumbnail URL"
-                  required
-                ></v-text-field>
-              </v-col>
+          <v-text-field
+            v-model="video.thumbnail"
+            label="Thumbnail URL"
+            required
+          ></v-text-field>
 
-              <v-col cols="12">
-                <v-text-field
-                  v-model="video.videourl"
-                  label="Video URL"
-                  required
-                ></v-text-field>
-              </v-col>
+          <v-text-field
+            v-model="video.videourl"
+            label="Video URL"
+            required
+          ></v-text-field>
 
-              <v-col cols="12">
-                <v-btn @click="createVideo">Create Video</v-btn>
-              </v-col>
-
-            </v-row>
-          </v-container>
+          <v-btn @click="createVideo">Create Video</v-btn>
         </v-form>
       </v-col>
 

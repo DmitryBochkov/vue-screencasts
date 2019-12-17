@@ -31,6 +31,18 @@ export default new Vuex.Store({
     },
     DELETE_VIDEO(state, videoId) {
       state.videos = state.videos.filter(v => v.id != videoId)
+    },
+    EDIT_VIDEO(state, newVideo) {
+      // let video = state.videos.find(v => v.id == newVideo.id)
+      // video = newVideo
+      // let foundIndex = state.videos.findIndex(v => v.id == newVideo.id)
+      // console.log(foundIndex);
+      // state.videos.splice(foundIndex, 1, newVideo)
+      state.videos.forEach(v => {
+        if(v.id == newVideo.id) {
+          v = newVideo
+        }
+      })
     }
   },
   actions: {
@@ -82,6 +94,17 @@ export default new Vuex.Store({
         if (response.status == 200 || response.status == 204) {
           commit('DELETE_VIDEO', videoId)
         }
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async editVideo({commit}, video) {
+      try {
+        const response = await Api().put(`/videos/${video.id}`)
+        let newVideo = response.data.data
+        newVideo = { id: newVideo.id, ...newVideo.attributes }
+        commit('EDIT_VIDEO', newVideo)
+        return newVideo
       } catch(err) {
         console.log(err)
       }

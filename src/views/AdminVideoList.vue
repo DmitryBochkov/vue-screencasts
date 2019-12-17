@@ -12,7 +12,7 @@
       <div>{{ video.description | abbreviate }}</div>
       <div class="actions">
         <v-btn x-small :to="{ name: 'video-watch', params: { id: video.id } }">View</v-btn>
-        <v-btn x-small>Edit</v-btn>
+        <v-btn x-small :to="{ name: 'admin-video-edit', params: { id: video.id } }">Edit</v-btn>
         <v-btn x-small @click="deleteVideo(video)">Delete</v-btn>
       </div>
     </div>

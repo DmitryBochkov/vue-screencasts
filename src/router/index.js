@@ -22,7 +22,13 @@ const routes = [
   {
     path: '/admin/videos',
     name: 'admin-video-list',
-    component: () => import(/* webpackChunkName: "videocreate" */ '../views/AdminVideoList.vue')
+    component: () => import(/* webpackChunkName: "adminvideolist" */ '../views/AdminVideoList.vue')
+  },
+  {
+    path: '/admin/videos/:id/edit',
+    name: 'admin-video-edit',
+    component: () => import(/* webpackChunkName: "adminvideoedit" */ '../views/AdminVideoEdit.vue'),
+    params: true
   },
   {
     path: '/video/new',

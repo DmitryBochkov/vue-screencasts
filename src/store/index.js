@@ -46,7 +46,12 @@ export default new Vuex.Store({
       commit('SET_TAGS', tags.map(tag => tag.attributes))
 
       let playedVideos = JSON.parse(window.localStorage.getItem('playedVideos'))
-      commit('SET_PLAYED_VIDEOS', playedVideos)
+      if (playedVideos == null) {
+        playedVideos = []
+        window.localStorage.setItem('playedVideos', JSON.stringify(playedVideos))
+      } else {
+        commit('SET_PLAYED_VIDEOS', playedVideos)
+      }
     },
     markPlayed({commit}, videoId) {
       let playedVideos = JSON.parse(window.localStorage.getItem('playedVideos'))

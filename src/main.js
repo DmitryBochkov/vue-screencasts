@@ -6,6 +6,13 @@ import { Server, JSONAPISerializer, Model, hasMany } from "miragejs"
 import videoJSON from "./mirage/videos.json"
 import tagsJSON from "./mirage/tags.json"
 import vuetify from '@/plugins/vuetify'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCheck)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Server({
   serializers: {

@@ -10,7 +10,7 @@
       </v-col>
       <v-col cols="12" lg="5" class="text-left">
         <h3 class="display-1 mb-2">{{ video.name }}</h3>
-        <p v-if="isPlayed" class="green--text">Played</p>
+        <p v-if="isPlayed" class="green--text"><font-awesome-icon icon="check" /> Played</p>
         <p v-else><v-btn x-small @click="markPlayed">Mark played</v-btn></p>
         <div v-html="video.description"></div>
         <span class="" v-for="tag_id in video.tag_ids" :key="tag_id">

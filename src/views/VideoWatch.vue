@@ -10,6 +10,8 @@
       </v-col>
       <v-col cols="12" lg="5" class="text-left">
         <h3 class="display-1 mb-2">{{ video.name }}</h3>
+        <p v-if="isPlayed" class="green--text">Played</p>
+        <p v-else><v-btn x-small>Mark played</v-btn></p>
         <div v-html="video.description"></div>
         <span class="" v-for="tag_id in video.tag_ids" :key="tag_id">
           <v-btn
@@ -27,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import 'video.js/dist/video-js.css'
 
 import { videoPlayer } from 'vue-video-player'
@@ -38,23 +40,28 @@ export default {
   },
   computed: {
     video(){
-      return this.$store.state.videos.find(vid => vid.id == this.$route.params.id) || {}
+      return this.videos.find(vid => vid.id == this.$route.params.id) || {}
     },
     ...mapGetters(['getTag']),
-    player() {
-      return this.$refs.videoPlayer.player
-    },
+    ...mapState(['playedVideos', 'videos']),
+    // player() {
+    //   return this.$refs.videoPlayer.player
+    // },
     playerOptions(){
       return {
         language: 'en',
         playbackRates: [0.7, 1.0, 1.5, 2.0, 2.5, 3.0],
         sources: [{
           type: "video/mp4",
-          src: this.video.videourl
+          src: ''
+          // src: this.video.videourl
         }],
         poster: this.video.thumbnail,
         fluid: true
       }
+    },
+    isPlayed() {
+      return this.playedVideos.includes(parseInt(this.video.id))
     }
   }
 }

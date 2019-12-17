@@ -18,7 +18,15 @@ new Server({
   serializers: {
     application: JSONAPISerializer,
     video: JSONAPISerializer.extend({
-      include: ['tags']
+      include: ['tags'],
+      normalize(json) {
+        return {
+          data: {
+            type: "video",
+            attributes: json
+          }
+        }
+      }
     }),
     tag: JSONAPISerializer.extend({
       include: ['videos']
@@ -38,6 +46,7 @@ new Server({
   },
   routes() {
     this.get('/videos')
+    this.post('/videos')
   }
 })
 

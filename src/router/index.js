@@ -20,6 +20,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/admin/videos',
+    name: 'admin-video-list',
+    component: () => import(/* webpackChunkName: "videocreate" */ '../views/AdminVideoList.vue')
+  },
+  {
     path: '/video/new',
     name: 'video-create',
     component: () => import(/* webpackChunkName: "videocreate" */ '../views/VideoCreate.vue')

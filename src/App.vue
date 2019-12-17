@@ -5,7 +5,7 @@
         <span>
           <v-btn text to="/">Vue Screencasts</v-btn>
         </span>
-        <v-btn text :to="{ name: 'video-create'}">Add Video</v-btn>
+        <v-btn text :to="{ name: 'admin-video-list'}">Admin Page</v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text>

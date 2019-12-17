@@ -28,6 +28,9 @@ export default new Vuex.Store({
     },
     ADD_VIDEO(state, video) {
       state.videos = state.videos.concat(video)
+    },
+    DELETE_VIDEO(state, videoId) {
+      state.videos = state.videos.filter(v => v.id != videoId)
     }
   },
   actions: {
@@ -69,6 +72,16 @@ export default new Vuex.Store({
         savedVideo = { id: savedVideo.id, ...savedVideo.attributes }
         commit('ADD_VIDEO', savedVideo)
         return savedVideo
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async deleteVideo({commit}, videoId) {
+      try {
+        const response = await Api().delete(`/videos/${videoId}`)
+        if (response.status == 200 || response.status == 204) {
+          commit('DELETE_VIDEO', videoId)
+        }
       } catch(err) {
         console.log(err)
       }

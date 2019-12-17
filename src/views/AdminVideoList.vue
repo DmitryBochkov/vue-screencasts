@@ -13,7 +13,7 @@
       <div class="actions">
         <v-btn x-small :to="{ name: 'video-watch', params: { id: video.id } }">View</v-btn>
         <v-btn x-small>Edit</v-btn>
-        <v-btn x-small @click="deleteVideo(video.id)">Delete</v-btn>
+        <v-btn x-small @click="deleteVideo(video)">Delete</v-btn>
       </div>
     </div>
   </v-container>
@@ -35,8 +35,11 @@
       }
     },
     methods: {
-      deleteVideo(videoId) {
-        this.$store.dispatch('deleteVideo', videoId)
+      deleteVideo(video) {
+        const response = confirm(`Are you sure you want to delete ${video.name}?`)
+        if (response) {
+          this.$store.dispatch('deleteVideo', parseInt(video.id))
+        }
       },
     },
   }

@@ -26,9 +26,14 @@ const routes = [
     params: true
   },
   {
+    path: '/video/new',
+    name: 'video-create',
+    component: () => import(/* webpackChunkName: "videocreate" */ '../views/VideoCreate.vue')
+  },
+  {
     path: '/tag/:id',
     name: 'tag',
-    component: () => import(/* webpackChunkName: "videowatch" */ '../views/TagVideoList.vue'),
+    component: () => import(/* webpackChunkName: "tagvideolist" */ '../views/TagVideoList.vue'),
     params: true
   }
 ]

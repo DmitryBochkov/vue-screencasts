@@ -3,8 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { Server, JSONAPISerializer, Model, hasMany } from "miragejs"
- import videoJSON from "./mirage/videos.json";
- import tagsJSON from "./mirage/tags.json";
+import videoJSON from "./mirage/videos.json"
+import tagsJSON from "./mirage/tags.json"
+import vuetify from '@/plugins/vuetify'
 
 new Server({
   serializers: {
@@ -38,5 +39,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

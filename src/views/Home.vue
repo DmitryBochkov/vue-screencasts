@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-    <h1>Videos</h1>
-    <div class="video-container">
-      <div v-for="video in videos" :key="video.name">
-        <VideoListVideo :video="video" />
-      </div>
-    </div>
+    <h1 class="display-3 ma-4 text-center">All Videos</h1>
+    <v-container>
+      <v-row>
+        <v-col v-for="video in videos" :key="video.name" cols="12" md="6" lg="4">
+          <VideoListVideo :video="video" />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

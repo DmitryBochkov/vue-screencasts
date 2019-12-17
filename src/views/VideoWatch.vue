@@ -1,19 +1,29 @@
 <template lang="html">
-  <div>
-    <video-player
-      v-if="video"
-      class="video-player-box"
-      ref="videoPlayer"
-      :options="playerOptions"
-    ></video-player>
-    <span class="" v-for="tag_id in video.tag_ids" :key="tag_id">
-      <router-link :to="{ name: 'tag', params: { id: tag_id }}">
-        <button class="tag-button">{{ getTag(tag_id).name }}</button>
-      </router-link>
-    </span>
-    <h3>{{ video.name }}</h3>
-    <div v-html="video.description"></div>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col cols="12" lg="7">
+        <video-player
+          class="video-player-box"
+          ref="videoPlayer"
+          :options="playerOptions"
+        ></video-player>
+      </v-col>
+      <v-col cols="12" lg="5" class="text-left">
+        <h3 class="display-1 mb-2">{{ video.name }}</h3>
+        <div v-html="video.description"></div>
+        <span class="" v-for="tag_id in video.tag_ids" :key="tag_id">
+          <v-btn
+          :to="{ name: 'tag', params: { id: tag_id }}"
+          color="green lighten-2"
+          class="my-1 mr-1"
+          small
+          >
+          {{ getTag(tag_id).name }}
+        </v-btn>
+      </span>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -27,34 +37,25 @@ export default {
     videoPlayer
   },
   computed: {
-    ...mapGetters({
-      getTag: 'getTag'
-    }),
-    video() {
+    video(){
       return this.$store.state.videos.find(vid => vid.id == this.$route.params.id) || {}
     },
-    playerOptions() {
+    ...mapGetters(['getTag']),
+    player() {
+      return this.$refs.videoPlayer.player
+    },
+    playerOptions(){
       return {
         language: 'en',
-        playbackRates: [0.7, 1.0, 1.5, 2.0],
+        playbackRates: [0.7, 1.0, 1.5, 2.0, 2.5, 3.0],
         sources: [{
           type: "video/mp4",
           src: this.video.videoUrl
         }],
-        poster: this.video.thumbnail
+        poster: this.video.thumbnail,
+        fluid: true
       }
     }
-  },
+  }
 }
 </script>
-
-<style lang="scss">
-  .video-player-box {
-    .video-js {
-      // width: 100%;
-      // max-width: 700px;
-      max-height: 600px;
-      margin: auto;
-    }
-  }
-</style>

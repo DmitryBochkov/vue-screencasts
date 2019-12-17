@@ -1,11 +1,24 @@
 <template>
-  <div id="app">
-    <div id="nav">
+  <v-app>
+    <v-app-bar app color="green">
+      <v-toolbar-title class="headline text-uppercase">
+        <span>
+          <v-btn text to="/">Vue Screencasts</v-btn>
+        </span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text>
+        <span class="mr-2">Login</span>
+      </v-btn>
+    </v-app-bar>
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    </div> -->
+    <v-content>
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>

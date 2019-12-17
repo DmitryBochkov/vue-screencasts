@@ -7,6 +7,7 @@
       <router-link :to="{ name: 'video-watch', params: { id: video.id }}">
         <v-card-title>{{ video.name }}</v-card-title>
       </router-link>
+      <v-card-text v-if="isPlayed" class="green--text text-left"><font-awesome-icon icon="check" /> Played</v-card-text>
       <v-card-actions>
         <span v-for="tag_id in video.tag_ids" :key="tag_id">
           <v-btn
@@ -24,13 +25,17 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
   export default {
     props: ['video'],
     computed: {
       ...mapGetters({
         getTag: 'getTag'
-      })
+      }),
+      ...mapState(['playedVideos']),
+      isPlayed() {
+        return this.playedVideos.includes(parseInt(this.video.id))
+      }
     }
   }
 </script>

@@ -3,9 +3,9 @@
     <v-row>
       <v-col cols="12" lg="7">
         <video-player
-          class="video-player-box"
           ref="videoPlayer"
           :options="playerOptions"
+          @ended="markPlayed"
         ></video-player>
       </v-col>
       <v-col cols="12" lg="5" class="text-left">
@@ -53,8 +53,8 @@ export default {
         playbackRates: [0.7, 1.0, 1.5, 2.0, 2.5, 3.0],
         sources: [{
           type: "video/mp4",
-          src: ''
-          // src: this.video.videourl
+          // src: ''
+          src: this.video.videourl
         }],
         poster: this.video.thumbnail,
         fluid: true
@@ -66,7 +66,9 @@ export default {
   },
   methods: {
     markPlayed() {
-      this.$store.dispatch('markPlayed', parseInt(this.video.id))
+      if (!this.isPlayed) {
+        this.$store.dispatch('markPlayed', parseInt(this.video.id))
+      }
     }
   }
 }

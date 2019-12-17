@@ -20,15 +20,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/video/new',
+    name: 'video-create',
+    component: () => import(/* webpackChunkName: "videocreate" */ '../views/VideoCreate.vue')
+  },
+  {
     path: '/video/:id',
     name: 'video-watch',
     component: () => import(/* webpackChunkName: "videowatch" */ '../views/VideoWatch.vue'),
     params: true
-  },
-  {
-    path: '/video/new',
-    name: 'video-create',
-    component: () => import(/* webpackChunkName: "videocreate" */ '../views/VideoCreate.vue')
   },
   {
     path: '/tag/:id',

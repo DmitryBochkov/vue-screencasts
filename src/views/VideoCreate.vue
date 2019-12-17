@@ -48,14 +48,14 @@
       </v-col>
 
       <v-col cols="12" md="6">
-        <VideoListVideo :video="video" />
-        <!-- <v-card>
+        <!-- <VideoListVideo :video="video" /> -->
+        <v-card>
           <v-img aspect-ratio="1.7" :src="video.thumbnail" :alt="video.name"></v-img>
           <div>
             <v-card-title>{{ video.name }}</v-card-title>
             <v-card-text class="text-left">{{ video.description }}</v-card-text>
           </div>
-        </v-card> -->
+        </v-card>
       </v-col>
 
     </v-row>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import VideoListVideo from '@/components/VideoListVideo'
+// import VideoListVideo from '@/components/VideoListVideo'
 export default {
   data() {
     return {
@@ -76,11 +76,12 @@ export default {
     }
   },
   components: {
-    VideoListVideo
+    // VideoListVideo
   },
   methods: {
-    createVideo() {
-      console.log(this.video);
+    async createVideo() {
+      const video = await this.$store.dispatch('createVideo', this.video)
+      this.$router.push({ name: 'video-watch', params: { id: video.id } })
     },
   },
 }

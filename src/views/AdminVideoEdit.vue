@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" md="6">
         <h1>Video Edit page</h1>
-        <v-form class="text-left">
+        <v-form class="text-left" v-model="valid">
           <v-text-field
             v-model="video.name"
             label="Name"
@@ -30,7 +30,7 @@
             :rules="[required('Video URL')]"
           ></v-text-field>
 
-          <v-btn @click="editVideo">Update Video</v-btn>
+          <v-btn @click="editVideo" :disabled="!valid">Update Video</v-btn>
         </v-form>
       </v-col>
 
@@ -55,6 +55,7 @@
     name: 'admin-video-edit',
     data() {
       return {
+        valid: false,
         required(propertyName) {
           return val => val && val.length > 0 || `${propertyName} is required.`
         },

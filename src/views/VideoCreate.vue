@@ -3,33 +3,7 @@
     <v-row>
       <v-col cols="12" md="6">
         <h1>Video Create page</h1>
-        <v-form class="text-left">
-          <v-text-field
-            v-model="video.name"
-            label="Name"
-            required
-          ></v-text-field>
-
-          <v-textarea
-            v-model="video.description"
-            label="Description"
-            required
-          ></v-textarea>
-
-          <v-text-field
-            v-model="video.thumbnail"
-            label="Thumbnail URL"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="video.videourl"
-            label="Video URL"
-            required
-          ></v-text-field>
-
-          <v-btn @click="createVideo">Create Video</v-btn>
-        </v-form>
+        <VideoEditForm :video="video" :saveVideo="createVideo" buttonText="Save Video" />
       </v-col>
 
       <v-col cols="12" md="6">
@@ -48,7 +22,8 @@
 </template>
 
 <script>
-// import VideoListVideo from '@/components/VideoListVideo'
+import VideoEditForm from '@/components/VideoEditForm'
+
 export default {
   data() {
     return {
@@ -61,7 +36,7 @@ export default {
     }
   },
   components: {
-    // VideoListVideo
+    VideoEditForm
   },
   methods: {
     async createVideo() {

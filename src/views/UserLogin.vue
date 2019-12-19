@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12" sm="10" md="6">
+      <v-col cols="12" sm="10" md="6" lg="4">
         <v-form>
           <v-text-field
             v-model="loginInfo.email"
@@ -11,7 +11,9 @@
           <v-text-field
             v-model="loginInfo.password"
             label="Password"
-            type="password"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
+            @click:append="showPassword = !showPassword"
           ></v-text-field>
 
           <v-btn @click="loginUser">Login</v-btn>
@@ -29,7 +31,8 @@
         loginInfo: {
           email: '',
           password: ''
-        }
+        },
+        showPassword: false
       }
     },
     methods: {

@@ -8,10 +8,12 @@ export default new Vuex.Store({
   state: {
     videos: [],
     tags: [],
-    playedVideos: []
+    playedVideos: [],
+    users: []
   },
   getters: {
-    getTag: state => id => state.tags.find(t => t.id == id)
+    getTag: state => id => state.tags.find(t => t.id == id),
+    users: state => state.users
   },
   mutations: {
     SET_VIDEOS(state, videos) {
@@ -43,6 +45,9 @@ export default new Vuex.Store({
           v = newVideo
         }
       })
+    },
+    SET_USERS(state, users) {
+      state.users = users
     }
   },
   actions: {
@@ -105,6 +110,19 @@ export default new Vuex.Store({
         newVideo = { id: newVideo.id, ...newVideo.attributes }
         commit('EDIT_VIDEO', newVideo)
         return newVideo
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async loadUsers({commit}) {
+      try {
+        const response = await Api().get('/users')
+        let users = response.data.data
+        users.forEach(user => {
+          user.attributes.id = user.id
+        })
+
+        commit('SET_USERS', users.map(u => u.attributes))
       } catch(err) {
         console.log(err)
       }

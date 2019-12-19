@@ -31,21 +31,15 @@
 </template>
 
 <script>
+  import * as validations from '@/utils/validations'
+
   export default {
     name: 'video-edit-form',
     props: ['video', 'saveVideo', 'buttonText'],
     data() {
       return {
         valid: false,
-        required(propertyName) {
-          return val => val && val.length > 0 || `${propertyName} is required.`
-        },
-        minLength(propertyName, minLength) {
-          return val => val && val.length >= minLength || `${propertyName} must be at least ${minLength} characters.`
-        },
-        maxLength(propertyName, maxLength) {
-          return val => val && val.length <= maxLength || `${propertyName} must be less than ${maxLength} characters.`
-        },
+        ...validations
       }
     },
   }

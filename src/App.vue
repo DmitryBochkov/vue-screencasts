@@ -8,14 +8,16 @@
         <v-btn text :to="{ name: 'admin-video-list'}">Admin Page</v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text>
+      <span v-if="currentUser.name">
+        {{ currentUser.name }}
+        <v-btn text>
+          <span class="mr-2" @click="logout">Logout</span>
+        </v-btn>
+      </span>
+      <v-btn text v-else>
         <span class="mr-2">Login</span>
       </v-btn>
     </v-app-bar>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <v-content>
       <router-view/>
     </v-content>
@@ -23,10 +25,25 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     name: 'app',
+    computed: {
+      ...mapGetters({
+        currentUser: 'currentUser'
+      }),
+      ...mapActions({
+        loadVideos: 'loadVideos',
+        logoutUser: 'logoutUser',
+      })
+    },
+    methods: {
+      logout() {
+        this.logoutUser
+      }
+    },
     mounted() {
-      this.$store.dispatch('loadVideos')
+      this.loadVideos
     }
   }
 </script>

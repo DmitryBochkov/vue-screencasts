@@ -9,11 +9,13 @@ export default new Vuex.Store({
     videos: [],
     tags: [],
     playedVideos: [],
-    users: []
+    users: [],
+    currentUser: {},
   },
   getters: {
     getTag: state => id => state.tags.find(t => t.id == id),
-    users: state => state.users
+    users: state => state.users,
+    currentUser: state => state.currentUser,
   },
   mutations: {
     SET_VIDEOS(state, videos) {
@@ -48,6 +50,12 @@ export default new Vuex.Store({
     },
     SET_USERS(state, users) {
       state.users = users
+    },
+    LOG_OUT_USER(state) {
+      state.currentUser = {}
+    },
+    SET_CURRENT_USER(state, user) {
+      state.currentUser = user
     }
   },
   actions: {
@@ -121,11 +129,22 @@ export default new Vuex.Store({
         users.forEach(user => {
           user.attributes.id = user.id
         })
+        
+        let user = window.localStorage.getItem('user')
 
         commit('SET_USERS', users.map(u => u.attributes))
+        commit('SET_CURRENT_USER', JSON.parse(user))
       } catch(err) {
         console.log(err)
       }
+    },
+    logoutUser({commit}) {
+      commit('LOG_OUT_USER')
+      window.localStorage.removeItem('user')
+    },
+    loginUser({commit}, user) {
+      commit('SET_CURRENT_USER', user)
+      window.localStorage.setItem('user', JSON.stringify(user))
     }
   },
   modules: {

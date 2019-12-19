@@ -129,7 +129,7 @@ export default new Vuex.Store({
         users.forEach(user => {
           user.attributes.id = user.id
         })
-        
+
         let user = window.localStorage.getItem('user')
 
         commit('SET_USERS', users.map(u => u.attributes))
@@ -142,9 +142,20 @@ export default new Vuex.Store({
       commit('LOG_OUT_USER')
       window.localStorage.removeItem('user')
     },
-    loginUser({commit}, user) {
-      commit('SET_CURRENT_USER', user)
-      window.localStorage.setItem('user', JSON.stringify(user))
+    async loginUser({commit}, loginInfo) {
+      try {
+        const response = await Api().post('/sessions', loginInfo)
+        let user = response.data.data
+        user.attributes.id = user.id
+        user = user.attributes
+
+        commit('SET_CURRENT_USER', user)
+        window.localStorage.setItem('user', JSON.stringify(user))
+        return user
+      } catch (err) {
+        console.log(err)
+        return { error: 'Email/password combination was incorrect. Please try again.' }
+      }
     }
   },
   modules: {

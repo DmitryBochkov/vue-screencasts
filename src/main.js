@@ -53,6 +53,15 @@ new Server({
     this.put('/videos/:id')
     this.delete('/videos/:id')
     this.get('/users')
+    this.post("/sessions", function(schema, request) {
+      let json = JSON.parse(request.requestBody)
+      let response = schema.users.findBy({ email: json.email })
+      if(json.password == 'qwerty') { // your actual backend should test the hashed password in the DB
+        return this.serialize(response)
+      } else {
+        return new Response(401)
+      }
+    })
   }
 })
 

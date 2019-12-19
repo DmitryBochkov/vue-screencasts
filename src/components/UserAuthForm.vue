@@ -1,6 +1,13 @@
 <template>
   <v-form v-model="valid">
     <v-text-field
+      v-if="hasName"
+      v-model="userInfo.name"
+      label="Name"
+      type="text"
+      :rules="[required('Name'), minLength('Name', 3)]"
+    ></v-text-field>
+    <v-text-field
       v-model="userInfo.email"
       label="Email"
       type="email"
@@ -25,7 +32,7 @@
 
   export default {
     name: 'user-auth-form',
-    props: ['submitForm', 'buttonText'],
+    props: ['submitForm', 'buttonText', 'hasName'],
     data() {
       return {
         valid: false,

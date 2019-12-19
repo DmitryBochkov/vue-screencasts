@@ -156,6 +156,21 @@ export default new Vuex.Store({
         console.log(err)
         return { error: 'Email/password combination was incorrect. Please try again.' }
       }
+    },
+    async registerUser({commit}, registrationInfo) {
+      try {
+        const response = await Api().post('/users', registrationInfo)
+        let user = response.data.data
+        user.attributes.id = user.id
+        user = user.attributes
+
+        commit('SET_CURRENT_USER', user)
+        window.localStorage.setItem('user', JSON.stringify(user))
+        return user
+      } catch (err) {
+        console.log(err)
+        return { error: 'There was an error. Please try again.' }
+      }
     }
   },
   modules: {

@@ -14,7 +14,7 @@
           <span class="mr-2" @click="logout">Logout</span>
         </v-btn>
       </span>
-      <v-btn text v-else>
+      <v-btn text v-else :to="{ name: 'user-login' }">
         <span class="mr-2">Login</span>
       </v-btn>
     </v-app-bar>
@@ -35,6 +35,7 @@
       ...mapActions({
         loadVideos: 'loadVideos',
         logoutUser: 'logoutUser',
+        loadCurrentUser: 'loadCurrentUser',
       })
     },
     methods: {
@@ -44,6 +45,7 @@
     },
     mounted() {
       this.loadVideos
+      this.loadCurrentUser
     }
   }
 </script>

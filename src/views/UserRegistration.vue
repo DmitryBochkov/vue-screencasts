@@ -2,6 +2,7 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="6" lg="4">
+        <h1>Registration</h1>
         <UserAuthForm :submitForm="registerUser" buttonText="Register" hasName="true" />
       </v-col>
     </v-row>

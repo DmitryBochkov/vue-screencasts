@@ -130,12 +130,18 @@ export default new Vuex.Store({
           user.attributes.id = user.id
         })
 
-        let user = window.localStorage.getItem('user')
-
         commit('SET_USERS', users.map(u => u.attributes))
-        commit('SET_CURRENT_USER', JSON.parse(user))
       } catch(err) {
         console.log(err)
+      }
+    },
+    loadCurrentUser({commit}) {
+      let user = JSON.parse(window.localStorage.getItem('user'))
+      if (user == null) {
+        user = {}
+        window.localStorage.setItem('user', JSON.stringify(user))
+      } else {
+        commit('SET_CURRENT_USER', user)
       }
     },
     logoutUser({commit}) {

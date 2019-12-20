@@ -26,9 +26,12 @@
     </v-content>
 
     <v-snackbar
+      v-for="(snackbar, index) in snackbars.filter(s => s.showing)"
+      :key="snackbar.text + Math.random()"
       v-model="snackbar.showing"
-      :timeout="0"
+      :timeout="snackbar.timeout"
       :color="snackbar.color"
+      :style="`bottom: ${(index * 20) + 10}px`"
     >
       {{ snackbar.text }}
       <v-btn text @click="snackbar.showing = false"
@@ -47,7 +50,7 @@
     computed: {
       ...mapGetters({
         currentUser: 'currentUser',
-        snackbar: 'snackbar'
+        snackbars: 'snackbars'
       }),
       ...mapActions({
         loadVideos: 'loadVideos',

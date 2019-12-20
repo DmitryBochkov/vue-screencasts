@@ -11,13 +11,13 @@ export default new Vuex.Store({
     playedVideos: [],
     users: [],
     currentUser: {},
-    snackbar: {},
+    snackbars: [],
   },
   getters: {
     getTag: state => id => state.tags.find(t => t.id == id),
     users: state => state.users,
     currentUser: state => state.currentUser,
-    snackbar: state => state.snackbar,
+    snackbars: state => state.snackbars,
   },
   mutations: {
     SET_VIDEOS(state, videos) {
@@ -60,7 +60,7 @@ export default new Vuex.Store({
       state.currentUser = user
     },
     SET_SNACKBAR(state, snackbar) {
-      state.snackbar = snackbar
+      state.snackbars = state.snackbars.concat(snackbar)
     },
   },
   actions: {
@@ -184,6 +184,7 @@ export default new Vuex.Store({
     setSnackbar({commit}, snackbar) {
       snackbar.showing = true
       snackbar.color = snackbar.color || 'success'
+      snackbar.timeout = snackbar.timeout || 4000
       commit('SET_SNACKBAR', snackbar)
     }
   },

@@ -5,7 +5,7 @@
         <span>
           <v-btn text to="/">Vue Screencasts</v-btn>
         </span>
-        <v-btn text :to="{ name: 'admin-video-list'}">Admin Page</v-btn>
+        <v-btn text :to="{ name: 'admin-video-list'}" v-if="this.currentUser.admin">Admin Page</v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <span v-if="currentUser.name">
@@ -16,6 +16,9 @@
       </span>
       <v-btn text v-else :to="{ name: 'user-login' }">
         <span class="mr-2">Login</span>
+      </v-btn>
+      <v-btn v-if="!this.currentUser.name" text :to="{ name: 'user-registration' }">
+        <span class="mr-2">Register</span>
       </v-btn>
     </v-app-bar>
     <v-content>

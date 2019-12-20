@@ -32,12 +32,20 @@ const routes = [
   {
     path: '/admin/videos',
     name: 'admin-video-list',
-    component: () => import(/* webpackChunkName: "adminvideolist" */ '../views/AdminVideoList.vue')
+    component: () => import(/* webpackChunkName: "adminvideolist" */ '../views/AdminVideoList.vue'),
+    beforeEnter(to, from, next) {
+      const currentUser = JSON.parse(window.localStorage.getItem('user'))
+      if (currentUser && currentUser.admin) {
+        next()
+      } else {
+        next('/')
+      }
+    },
   },
   {
     path: '/admin/users',
     name: 'admin-user-list',
-    component: () => import(/* webpackChunkName: "adminuserlist" */ '../views/AdminUserList.vue')
+    component: () => import(/* webpackChunkName: "adminuserlist" */ '../views/AdminUserList.vue'),
   },
   {
     path: '/admin/videos/:id/edit',

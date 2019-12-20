@@ -6,7 +6,8 @@
   }, {
     "id": 2,
     "name": "Izuku Midoriya",
-    "email": "deku@ua.edu"
+    "email": "deku@ua.edu",
+    "admin": true
   },  {
     "id": 3,
     "name": "Jeffrey Biles",
@@ -22,6 +23,7 @@
   }, {
     "id": 6,
     "name": "Gon Freecs",
-    "email": "gon@hunter.gov"
+    "email": "gon@hunter.gov",
+    "admin": true
   }
 ]

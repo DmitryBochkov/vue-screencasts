@@ -24,7 +24,7 @@
 <script>
   import { mapState } from 'vuex'
   import VideoEditForm from '@/components/VideoEditForm'
-  
+
   export default {
     name: 'admin-video-edit',
     computed: {
@@ -35,7 +35,8 @@
     },
     methods: {
       async editVideo() {
-        await this.$store.dispatch('editVideo', this.video)
+        const video = await this.$store.dispatch('editVideo', this.video)
+        this.$store.dispatch('setSnackbar', { text: `You have successfully edited the video ${video.name}` })
         this.$router.push({ name: 'admin-video-list' })
       },
     },

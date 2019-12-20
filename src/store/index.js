@@ -11,11 +11,13 @@ export default new Vuex.Store({
     playedVideos: [],
     users: [],
     currentUser: {},
+    snackbar: {},
   },
   getters: {
     getTag: state => id => state.tags.find(t => t.id == id),
     users: state => state.users,
     currentUser: state => state.currentUser,
+    snackbar: state => state.snackbar,
   },
   mutations: {
     SET_VIDEOS(state, videos) {
@@ -56,7 +58,10 @@ export default new Vuex.Store({
     },
     SET_CURRENT_USER(state, user) {
       state.currentUser = user
-    }
+    },
+    SET_SNACKBAR(state, snackbar) {
+      state.snackbar = snackbar
+    },
   },
   actions: {
     async loadVideos({commit}) {
@@ -113,7 +118,7 @@ export default new Vuex.Store({
     },
     async editVideo({commit}, video) {
       try {
-        const response = await Api().put(`/videos/${video.id}`)
+        const response = await Api().put(`/videos/${video.id}`, video)
         let newVideo = response.data.data
         newVideo = { id: newVideo.id, ...newVideo.attributes }
         commit('EDIT_VIDEO', newVideo)
@@ -165,18 +170,21 @@ export default new Vuex.Store({
     },
     async registerUser({commit}, registrationInfo) {
       try {
-        const response = await Api().post('/users', registrationInfo)
+        const response = await Api().post('/users', registrationInfo);
         let user = response.data.data
         user.attributes.id = user.id
         user = user.attributes
 
-        commit('SET_CURRENT_USER', user)
-        window.localStorage.setItem('user', JSON.stringify(user))
-        return user
-      } catch (err) {
-        console.log(err)
-        return { error: 'There was an error. Please try again.' }
+        commit('SET_CURRENT_USER', user);
+        return user;
+      } catch {
+        return {error: "There was an error.  Please try again."}
       }
+    },
+    setSnackbar({commit}, snackbar) {
+      snackbar.showing = true
+      snackbar.color = snackbar.color || 'success'
+      commit('SET_SNACKBAR', snackbar)
     }
   },
   modules: {

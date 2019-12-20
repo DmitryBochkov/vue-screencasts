@@ -22,9 +22,14 @@
         const user = await this.$store.dispatch('loginUser', loginInfo)
 
         if (user.error) {
-          alert(user.error)
+          this.$store.dispatch('setSnackbar', { text: `${user.error}`, color: 'error' })
         } else {
-          alert('Hello, ' + user.name)
+          this.$store.dispatch('setSnackbar', { text: `Welcome to the app, ${user.name}` })
+          if (user.admin) {
+            this.$router.push({ name: 'admin-video-list' })
+          } else {
+            this.$router.push({ name: 'home' })
+          }
         }
       }
     }

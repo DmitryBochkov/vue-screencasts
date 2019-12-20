@@ -24,6 +24,19 @@
     <v-content>
       <router-view/>
     </v-content>
+
+    <v-snackbar
+      v-model="snackbar.showing"
+      :timeout="0"
+      :color="snackbar.color"
+    >
+      {{ snackbar.text }}
+      <v-btn text @click="snackbar.showing = false"
+        >
+        Close
+      </v-btn>
+    </v-snackbar>
+
   </v-app>
 </template>
 
@@ -33,7 +46,8 @@
     name: 'app',
     computed: {
       ...mapGetters({
-        currentUser: 'currentUser'
+        currentUser: 'currentUser',
+        snackbar: 'snackbar'
       }),
       ...mapActions({
         loadVideos: 'loadVideos',

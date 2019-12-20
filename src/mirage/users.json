@@ -2,28 +2,34 @@
   {
     "id": 1,
     "name": "Toshinori Yagi",
-    "email": "allmight@ua.edu"
+    "email": "allmight@ua.edu",
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ1"
   }, {
     "id": 2,
     "name": "Izuku Midoriya",
     "email": "deku@ua.edu",
-    "admin": true
+    "admin": true,
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ2"
   },  {
     "id": 3,
     "name": "Jeffrey Biles",
-    "email": "bilesjeffrey@gmail.com"
+    "email": "bilesjeffrey@gmail.com",
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ3"
   }, {
     "id": 4,
     "name": "Evan You",
-    "email": "notminetogiveaway@secret.com"
+    "email": "notminetogiveaway@secret.com",
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ4"
   }, {
     "id": 5,
     "name": "Spike Spiegel",
-    "email": "spike@bebop.bounty"
+    "email": "spike@bebop.bounty",
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ5"
   }, {
     "id": 6,
     "name": "Gon Freecs",
     "email": "gon@hunter.gov",
-    "admin": true
+    "admin": true,
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ6"
   }
 ]

@@ -12,12 +12,43 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/admin',
+    name: 'admin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
+    beforeEnter(to, from, next) {
+      const currentUser = JSON.parse(window.localStorage.getItem('user'))
+      if (currentUser && currentUser.admin) {
+        next()
+      } else {
+        next('/')
+      }
+    },
+    children: [
+      {
+        path: 'videos',
+        name: 'admin-video-list',
+        component: () => import(/* webpackChunkName: "adminvideolist" */ '../views/AdminVideoList.vue'),
+      },
+      {
+        path: 'users',
+        name: 'admin-user-list',
+        component: () => import(/* webpackChunkName: "adminuserlist" */ '../views/AdminUserList.vue'),
+      },
+      {
+        path: 'videos/:id/edit',
+        name: 'admin-video-edit',
+        component: () => import(/* webpackChunkName: "adminvideoedit" */ '../views/AdminVideoEdit.vue'),
+        params: true
+      },
+      {
+        path: 'video/new',
+        name: 'admin-video-create',
+        component: () => import(/* webpackChunkName: "adminvideocreate" */ '../views/AdminVideoCreate.vue')
+      },
+    ]
   },
   {
     path: '/registration',
@@ -28,35 +59,6 @@ const routes = [
     path: '/login',
     name: 'user-login',
     component: () => import(/* webpackChunkName: "userlogin" */ '../views/UserLogin.vue')
-  },
-  {
-    path: '/admin/videos',
-    name: 'admin-video-list',
-    component: () => import(/* webpackChunkName: "adminvideolist" */ '../views/AdminVideoList.vue'),
-    beforeEnter(to, from, next) {
-      const currentUser = JSON.parse(window.localStorage.getItem('user'))
-      if (currentUser && currentUser.admin) {
-        next()
-      } else {
-        next('/')
-      }
-    },
-  },
-  {
-    path: '/admin/users',
-    name: 'admin-user-list',
-    component: () => import(/* webpackChunkName: "adminuserlist" */ '../views/AdminUserList.vue'),
-  },
-  {
-    path: '/admin/videos/:id/edit',
-    name: 'admin-video-edit',
-    component: () => import(/* webpackChunkName: "adminvideoedit" */ '../views/AdminVideoEdit.vue'),
-    params: true
-  },
-  {
-    path: '/video/new',
-    name: 'video-create',
-    component: () => import(/* webpackChunkName: "videocreate" */ '../views/VideoCreate.vue')
   },
   {
     path: '/video/:id',

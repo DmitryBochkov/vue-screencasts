@@ -1,7 +1,7 @@
 <template>
   <v-container class="text-left">
     <h1>Video List</h1>
-    <v-btn text :to="{ name: 'video-create'}">Add Video</v-btn>
+    <v-btn text :to="{ name: 'admin-video-create'}">Add Video</v-btn>
     <div class="flex-table">
       <div>Name</div>
       <div>Description</div>

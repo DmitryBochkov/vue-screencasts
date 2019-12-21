@@ -33,7 +33,10 @@ new Server({
       include: ['videos']
     }),
     user: JSONAPISerializer.extend({
-      attrs: ['name', 'email', 'admin', 'token'],
+      attrs: ['name', 'email', 'admin', 'token', 'playedVideos'],
+      keyForAttribute(attr){
+        return attr
+      }
     })
   },
   fixtures: {
@@ -70,6 +73,9 @@ new Server({
       } else {
         return new Response(401)
       }
+    }),
+    this.post('/video_plays', function() {
+      return new Response(201)
     })
   }
 })

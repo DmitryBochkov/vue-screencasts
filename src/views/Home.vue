@@ -30,9 +30,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-  .video-container {
-
-  }
-</style>

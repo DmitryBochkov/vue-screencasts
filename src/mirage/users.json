@@ -3,33 +3,39 @@
     "id": 1,
     "name": "Toshinori Yagi",
     "email": "allmight@ua.edu",
-    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ1"
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ1",
+    "playedVideos": ["1", "3"]
   }, {
     "id": 2,
     "name": "Izuku Midoriya",
     "email": "deku@ua.edu",
     "admin": true,
-    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ2"
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ2",
+    "playedVideos": ["4", "6"]
   },  {
     "id": 3,
     "name": "Jeffrey Biles",
     "email": "bilesjeffrey@gmail.com",
-    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ3"
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ3",
+    "playedVideos": ["1", "2", "7"]
   }, {
     "id": 4,
     "name": "Evan You",
     "email": "notminetogiveaway@secret.com",
-    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ4"
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ4",
+    "playedVideos": []
   }, {
     "id": 5,
     "name": "Spike Spiegel",
     "email": "spike@bebop.bounty",
-    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ5"
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ5",
+    "playedVideos": []
   }, {
     "id": 6,
     "name": "Gon Freecs",
     "email": "gon@hunter.gov",
     "admin": true,
-    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ6"
+    "token": "Zwibxvg3MDZab6EKe2ny33uDFLQQgSJ6",
+    "playedVideos": []
   }
 ]

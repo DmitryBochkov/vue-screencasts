@@ -8,7 +8,6 @@ export default new Vuex.Store({
   state: {
     videos: [],
     tags: [],
-    playedVideos: [],
     users: [],
     currentUser: {},
     snackbars: [],
@@ -18,6 +17,7 @@ export default new Vuex.Store({
     users: state => state.users,
     currentUser: state => state.currentUser,
     snackbars: state => state.snackbars,
+    playedVideos: state => state.currentUser.playedVideos,
   },
   mutations: {
     SET_VIDEOS(state, videos) {
@@ -27,10 +27,10 @@ export default new Vuex.Store({
       state.tags = tags
     },
     SET_PLAYED_VIDEOS(state, playedVideos) {
-      state.playedVideos = playedVideos
+      state.currentUser.playedVideos = playedVideos
     },
     MARK_VIDEO_PLAYED(state, videoId) {
-      state.playedVideos = state.playedVideos.concat(videoId)
+      state.currentUser.playedVideos = state.currentUser.playedVideos.concat(videoId)
     },
     ADD_VIDEO(state, video) {
       state.videos = state.videos.concat(video)
@@ -80,19 +80,9 @@ export default new Vuex.Store({
 
       commit('SET_VIDEOS', videos.map(v => v.attributes))
       commit('SET_TAGS', tags.map(tag => tag.attributes))
-
-      let playedVideos = JSON.parse(window.localStorage.getItem('playedVideos'))
-      if (playedVideos == null) {
-        playedVideos = []
-        window.localStorage.setItem('playedVideos', JSON.stringify(playedVideos))
-      } else {
-        commit('SET_PLAYED_VIDEOS', playedVideos)
-      }
     },
-    markPlayed({commit}, videoId) {
-      let playedVideos = JSON.parse(window.localStorage.getItem('playedVideos'))
-      playedVideos = playedVideos.concat(videoId)
-      window.localStorage.setItem('playedVideos', JSON.stringify(playedVideos))
+    async markPlayed({commit}, videoId) {
+      await Api().post('/video_plays', { video_id: videoId })
       commit('MARK_VIDEO_PLAYED', videoId)
     },
     async createVideo({commit}, video) {
@@ -127,6 +117,7 @@ export default new Vuex.Store({
         console.log(err)
       }
     },
+
     async loadUsers({commit}) {
       try {
         const response = await Api().get('/users')
@@ -140,41 +131,55 @@ export default new Vuex.Store({
         console.log(err)
       }
     },
-    loadCurrentUser({commit}) {
-      let user = JSON.parse(window.localStorage.getItem('user'))
-      if (user == null) {
+
+    async loadCurrentUser({commit, dispatch}) {
+      let user = JSON.parse(localStorage.getItem('user'))
+
+      if (user === null) {
         user = {}
-        window.localStorage.setItem('user', JSON.stringify(user))
+        // localStorage.setItem('user', JSON.stringify(user))
+        commit('SET_CURRENT_USER', user)
       } else {
         commit('SET_CURRENT_USER', user)
+        dispatch('loadPlayedVideos', user.id)
       }
+
     },
+
+    async loadPlayedVideos({commit}, userId) {
+      let response = await Api().get(`/users/${userId}`)
+      let user = response.data.data.attributes
+      commit('SET_PLAYED_VIDEOS', user.playedVideos)
+    },
+
     logoutUser({commit}) {
       commit('LOG_OUT_USER')
-      window.localStorage.removeItem('user')
+      localStorage.removeItem('user')
     },
-    async loginUser({commit}, loginInfo) {
+    async loginUser({commit, dispatch}, loginInfo) {
       try {
         const response = await Api().post('/sessions', loginInfo)
         let user = response.data.data
         user.attributes.id = user.id
         user = user.attributes
 
+        dispatch('loadPlayedVideos', user.id)
         commit('SET_CURRENT_USER', user)
-        window.localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('user', JSON.stringify(user))
         return user
       } catch (err) {
         console.log(err)
         return { error: 'Email/password combination was incorrect. Please try again.' }
       }
     },
-    async registerUser({commit}, registrationInfo) {
+    async registerUser({commit, dispatch}, registrationInfo) {
       try {
         const response = await Api().post('/users', registrationInfo);
         let user = response.data.data
         user.attributes.id = user.id
         user = user.attributes
 
+        dispatch('loadPlayedVideos', user.id)
         commit('SET_CURRENT_USER', user);
         return user;
       } catch {

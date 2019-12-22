@@ -44,6 +44,12 @@ const routes = [
         params: true
       },
       {
+        path: 'videos/:id/show',
+        name: 'admin-video-show',
+        component: () => import(/* webpackChunkName: "adminvideoshow" */ '../views/AdminVideoShow.vue'),
+        params: true
+      },
+      {
         path: 'video/new',
         name: 'admin-video-create',
         component: () => import(/* webpackChunkName: "adminvideocreate" */ '../views/AdminVideoCreate.vue')

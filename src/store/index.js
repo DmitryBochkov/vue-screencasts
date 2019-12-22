@@ -62,6 +62,14 @@ export default new Vuex.Store({
     SET_SNACKBAR(state, snackbar) {
       state.snackbars = state.snackbars.concat(snackbar)
     },
+    CONNECT_TAG(state, {tag, video}) {
+      video.tag_ids = video.tag_ids.concat(tag.id.toString())
+      tag.video_ids = tag.video_ids.concat(video.id.toString())
+    },
+    DISCONNECT_TAG(state, {tag, video}) {
+      video.tag_ids = video.tag_ids.filter(tag_id => tag_id != tag.id)
+      tag.video_ids = tag.video_ids.filter(video_id => video_id != video.id)
+    },
   },
   actions: {
     async loadVideos({commit}) {
@@ -191,7 +199,21 @@ export default new Vuex.Store({
       snackbar.color = snackbar.color || 'success'
       snackbar.timeout = snackbar.timeout || 4000
       commit('SET_SNACKBAR', snackbar)
-    }
+    },
+    connectTagToVideo({commit}, {tag, video}) {
+      Api().post('/video_tags', {
+        video_id: video.id,
+        tag_id: tag.id
+      })
+      commit('CONNECT_TAG', { tag, video })
+    },
+    disconnectTagFromVideo({commit}, {tag, video}) {
+      Api().post('/video_tags/delete', {
+        video_id: video.id,
+        tag_id: tag.id
+      })
+      commit('DISCONNECT_TAG', { tag, video })
+    },
   },
   modules: {
   }

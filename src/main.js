@@ -77,6 +77,22 @@ new Server({
     this.post('/video_plays', function() {
       return new Response(201)
     })
+    this.post('/video_tags', function() {
+      return new Response(201)
+    })
+    this.post('/video_tags/delete', function() {
+      return new Response(200)
+    })
+    this.get("/tags")
+    this.put("/tags/:id", function() {
+      return new Response(200)
+    })
+    this.delete("/tags/:id")
+    this.post("/tags", function({tags}, {requestBody}) {
+      let json = JSON.parse(requestBody)
+      let response = tags.create(json)
+      return this.serialize(response)
+    })
   }
 })
 

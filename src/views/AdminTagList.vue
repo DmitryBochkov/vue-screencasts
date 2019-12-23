@@ -7,16 +7,26 @@
       <div>Action</div>
     </div>
     <div v-for="tag in tags" :key="tag.id" class="flex-table">
-      <div>{{ tag.name }}</div>
+      <div>
+        <div v-if="tagEditingId == tag.id">
+          <v-text-field
+            v-model="tag.name"
+            :id="`tag-edit-${tag.id}`"
+            @blur="updateTagName(tag)"
+            @keydown.enter="updateTagName(tag)"
+            ></v-text-field>
+        </div>
+        <div v-else @click="setToEditing(tag)">{{ tag.name }}</div>
+      </div>
       <div>
         <router-link :to="{ name: 'tag', params: { id: tag.id } }">
           {{ tag.video_ids.length }}
         </router-link>
       </div>
       <div class="actions">
+        <v-btn x-small  @click="setToEditing(tag)">Edit</v-btn>
         <!-- <v-btn x-small :to="{ name: 'video-watch', params: { id: video.id } }">Watch</v-btn>
         <v-btn x-small :to="{ name: 'admin-video-show', params: { id: video.id } }">Show</v-btn>
-        <v-btn x-small :to="{ name: 'admin-video-edit', params: { id: video.id } }">Edit</v-btn>
         <v-btn x-small @click="deleteVideo(video)">Delete</v-btn> -->
       </div>
     </div>
@@ -26,10 +36,27 @@
 <script>
   import { mapState } from 'vuex'
   export default {
+    data() {
+      return {
+        tagEditingId: '',
+      }
+    },
     computed: {
       ...mapState({
         tags: 'tags'
       })
+    },
+    methods: {
+      setToEditing(tag) {
+        this.tagEditingId = tag.id
+        setTimeout(function() {
+          document.getElementById(`tag-edit-${tag.id}`).focus()
+        }, 1)
+      },
+      updateTagName(tag) {
+        this.$store.dispatch('updateTagName', tag)
+        this.tagEditingId = ''
+      },
     },
   }
 </script>

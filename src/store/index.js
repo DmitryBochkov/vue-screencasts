@@ -73,6 +73,10 @@ export default new Vuex.Store({
     CREATE_TAG(state, {tag}) {
       state.tags = state.tags.concat(tag)
     },
+    UPDATE_TAG_NAME(state, tag) {
+      let tagToUpdade = state.tags.find(t => t.id == tag.id)
+      tagToUpdade.name = tag.name
+    },
   },
   actions: {
     async loadVideos({commit}) {
@@ -233,6 +237,10 @@ export default new Vuex.Store({
       createdTag.video_ids = []
       commit('CREATE_TAG', { tag: createdTag })
       return createdTag
+    },
+    async updateTagName({commit}, tag) {
+      await Api().put(`/tags/${tag.id}`, tag)
+      commit('UPDATE_TAG_NAME', tag)
     },
   },
   modules: {

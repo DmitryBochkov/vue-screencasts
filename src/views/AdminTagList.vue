@@ -31,6 +31,18 @@
         <v-btn x-small @click="deleteVideo(video)">Delete</v-btn> -->
       </div>
     </div>
+
+    <div v-if="!isEditingNewTag">
+      <v-btn small @click="startNewTag()">Add tag</v-btn>
+    </div>
+    <div v-else>
+      <v-text-field
+        v-model="newTagName"
+        id="new-tag-name"
+        @blur="createTag"
+        @keydown.enter="createTag"
+      ></v-text-field>
+    </div>
   </v-container>
 </template>
 
@@ -40,6 +52,8 @@
     data() {
       return {
         tagEditingId: '',
+        isEditingNewTag: false,
+        newTagName: '',
       }
     },
     computed: {
@@ -63,6 +77,19 @@
         if (confirmed) {
           this.$store.dispatch('deleteTag', tag)
         }
+      },
+      startNewTag() {
+        this.isEditingNewTag = true
+        setTimeout(function() {
+          document.getElementById('new-tag-name').focus()
+        }, 1)
+      },
+      createTag() {
+        if (this.newTagName.length > 0) {
+          this.$store.dispatch('createTag', { name: this.newTagName })
+          this.newTagName = ''
+        }
+        this.isEditingNewTag = false
       },
     },
   }

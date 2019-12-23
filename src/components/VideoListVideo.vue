@@ -16,7 +16,7 @@
           :to="{ name: 'tag', params: { id: tag_id }}"
           small
           >
-          {{ getTag(tag_id).name }}
+          {{ getTag(tag_id) && getTag(tag_id).name }}
         </v-btn>
       </span>
       </v-card-actions>

@@ -56,6 +56,7 @@
         loadVideos: 'loadVideos',
         logoutUser: 'logoutUser',
         loadCurrentUser: 'loadCurrentUser',
+        loadAllTags: 'loadAllTags',
       })
     },
     methods: {
@@ -63,8 +64,9 @@
         this.logoutUser
       }
     },
-    mounted() {
+    created() {
       this.loadVideos
+      this.loadAllTags
       this.loadCurrentUser
     }
   }

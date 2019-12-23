@@ -70,6 +70,9 @@ export default new Vuex.Store({
       video.tag_ids = video.tag_ids.filter(tag_id => tag_id != tag.id)
       tag.video_ids = tag.video_ids.filter(video_id => video_id != video.id)
     },
+    CREATE_TAG(state, {tag}) {
+      state.tags = state.tags.concat(tag)
+    },
   },
   actions: {
     async loadVideos({commit}) {
@@ -79,14 +82,23 @@ export default new Vuex.Store({
         v.attributes.id = v.id
         v.attributes.tag_ids = v.relationships.tags.data.map(t => t.id)
       })
+      //
+      // let tags = response.data.included.filter(item => item.type === 'tags')
+      // tags.forEach(t => {
+      //   t.attributes.id = t.id
+      //   t.attributes.video_ids = t.relationships.videos.data.map(v => v.id)
+      // })
 
-      let tags = response.data.included.filter(item => item.type === 'tags')
+      commit('SET_VIDEOS', videos.map(v => v.attributes))
+      // commit('SET_TAGS', tags.map(tag => tag.attributes))
+    },
+    async loadAllTags({commit}) {
+      const response = await Api().get('/tags')
+      let tags = response.data.data
       tags.forEach(t => {
         t.attributes.id = t.id
         t.attributes.video_ids = t.relationships.videos.data.map(v => v.id)
       })
-
-      commit('SET_VIDEOS', videos.map(v => v.attributes))
       commit('SET_TAGS', tags.map(tag => tag.attributes))
     },
     async markPlayed({commit}, videoId) {
@@ -200,19 +212,27 @@ export default new Vuex.Store({
       snackbar.timeout = snackbar.timeout || 4000
       commit('SET_SNACKBAR', snackbar)
     },
-    connectTagToVideo({commit}, {tag, video}) {
-      Api().post('/video_tags', {
+    async connectTagToVideo({commit}, {tag, video}) {
+      await Api().post('/video_tags', {
         video_id: video.id,
         tag_id: tag.id
       })
       commit('CONNECT_TAG', { tag, video })
     },
-    disconnectTagFromVideo({commit}, {tag, video}) {
-      Api().post('/video_tags/delete', {
+    async disconnectTagFromVideo({commit}, {tag, video}) {
+      await Api().post('/video_tags/delete', {
         video_id: video.id,
         tag_id: tag.id
       })
       commit('DISCONNECT_TAG', { tag, video })
+    },
+    async createTag({commit}, {name}) {
+      let response = await Api().post('/tags', { name })
+      let createdTag = response.data.data.attributes
+      createdTag.id = response.data.data.id
+      createdTag.video_ids = []
+      commit('CREATE_TAG', { tag: createdTag })
+      return createdTag
     },
   },
   modules: {

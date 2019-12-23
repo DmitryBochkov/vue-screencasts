@@ -20,7 +20,7 @@
         videos: 'videos'
       }),
       ...mapGetters({
-        getTag: 'getTag'
+        getTag: 'tags/getTag'
       }),
       tag() {
         return this.getTag(this.$route.params.id) || {}

@@ -22,7 +22,7 @@ export default {
   computed: {
     ...mapState({
       videos: 'videos',
-      tags: 'tags'
+      tags: state => state.tags.tags
     })
   },
   components: {

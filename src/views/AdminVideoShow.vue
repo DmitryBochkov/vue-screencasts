@@ -24,8 +24,13 @@
   export default {
     name: 'admin-video-show',
     computed: {
-      ...mapState(['videos', 'tags']),
-      ...mapGetters(['getTag']),
+      ...mapState({
+        videos: 'videos',
+        tags: state => state.tags.tags
+      }),
+      ...mapGetters({
+        getTag: 'tags/getTag'
+      }),
       video() {
         return this.videos.find(vid => vid.id == this.$route.params.id) || {}
       },
@@ -37,25 +42,25 @@
         async set(newTags) {
           let createdTag = newTags.find(t => typeof t === 'string')
           if (createdTag) {
-            createdTag = await this.$store.dispatch('createTag', { name: createdTag })
-            this.$store.dispatch('connectTagToVideo', { tag: createdTag, video: this.video })
+            createdTag = await this.$store.dispatch('tags/createTag', { name: createdTag })
+            this.$store.dispatch('tags/connectTagToVideo', { tag: createdTag, video: this.video })
           } else {
             let addedTags = _.differenceBy(newTags, this.videoTags, 'id')
             let removedTags = _.differenceBy(this.videoTags, newTags, 'id')
 
             if (addedTags.length > 0) {
-              this.$store.dispatch('connectTagToVideo', { tag: addedTags[0], video: this.video })
+              this.$store.dispatch('tags/connectTagToVideo', { tag: addedTags[0], video: this.video })
             }
 
             if (removedTags.length > 0) {
-              this.$store.dispatch('disconnectTagFromVideo', { tag: removedTags[0], video: this.video })
+              this.$store.dispatch('tags/disconnectTagFromVideo', { tag: removedTags[0], video: this.video })
             }
           }
         }
       },
     },
     created() {
-      this.$store.dispatch('loadAllTags')
+      this.$store.dispatch('tags/loadAllTags')
     }
   }
 </script>

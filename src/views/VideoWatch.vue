@@ -44,7 +44,10 @@ export default {
     video(){
       return this.videos.find(vid => vid.id == this.$route.params.id) || {}
     },
-    ...mapGetters(['getTag', 'playedVideos']),
+    ...mapGetters({
+      getTag: 'tags/getTag', 
+      playedVideos: 'playedVideos'
+    }),
     ...mapState(['videos', 'currentUser']),
     // player() {
     //   return this.$refs.videoPlayer.player

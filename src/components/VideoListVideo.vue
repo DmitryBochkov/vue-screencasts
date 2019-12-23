@@ -30,7 +30,7 @@
     props: ['video'],
     computed: {
       ...mapGetters({
-        getTag: 'getTag',
+        getTag: 'tags/getTag',
         playedVideos: 'playedVideos',
         currentUser: 'currentUser',
       }),

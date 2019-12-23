@@ -56,7 +56,7 @@
         loadVideos: 'loadVideos',
         logoutUser: 'logoutUser',
         loadCurrentUser: 'loadCurrentUser',
-        loadAllTags: 'loadAllTags',
+        loadAllTags: 'tags/loadAllTags',
       })
     },
     methods: {

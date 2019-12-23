@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Api from '../services/api'
 import snackbarModule from './snackbar'
+import tagsModule from './tags'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    snackbar: snackbarModule
+    snackbar: snackbarModule,
+    tags: tagsModule
   },
   state: {
     videos: [],
@@ -16,7 +18,6 @@ export default new Vuex.Store({
     currentUser: {},
   },
   getters: {
-    getTag: state => id => state.tags.find(t => t.id == id),
     users: state => state.users,
     currentUser: state => state.currentUser,
     playedVideos: state => state.currentUser.playedVideos,
@@ -24,9 +25,6 @@ export default new Vuex.Store({
   mutations: {
     SET_VIDEOS(state, videos) {
       state.videos = videos
-    },
-    SET_TAGS(state, tags) {
-      state.tags = tags
     },
     SET_PLAYED_VIDEOS(state, playedVideos) {
       state.currentUser.playedVideos = playedVideos
@@ -61,24 +59,6 @@ export default new Vuex.Store({
     SET_CURRENT_USER(state, user) {
       state.currentUser = user
     },
-    CONNECT_TAG(state, {tag, video}) {
-      video.tag_ids = video.tag_ids.concat(tag.id.toString())
-      tag.video_ids = tag.video_ids.concat(video.id.toString())
-    },
-    DISCONNECT_TAG(state, {tag, video}) {
-      video.tag_ids = video.tag_ids.filter(tag_id => tag_id != tag.id)
-      tag.video_ids = tag.video_ids.filter(video_id => video_id != video.id)
-    },
-    CREATE_TAG(state, {tag}) {
-      state.tags = state.tags.concat(tag)
-    },
-    UPDATE_TAG_NAME(state, tag) {
-      let tagToUpdade = state.tags.find(t => t.id == tag.id)
-      tagToUpdade.name = tag.name
-    },
-    DELETE_TAG(state, tag) {
-      state.tags = state.tags.filter(t => t.id != tag.id)
-    },
   },
   actions: {
     async loadVideos({commit}) {
@@ -97,15 +77,6 @@ export default new Vuex.Store({
 
       commit('SET_VIDEOS', videos.map(v => v.attributes))
       // commit('SET_TAGS', tags.map(tag => tag.attributes))
-    },
-    async loadAllTags({commit}) {
-      const response = await Api().get('/tags')
-      let tags = response.data.data
-      tags.forEach(t => {
-        t.attributes.id = t.id
-        t.attributes.video_ids = t.relationships.videos.data.map(v => v.id)
-      })
-      commit('SET_TAGS', tags.map(tag => tag.attributes))
     },
     async markPlayed({commit}, videoId) {
       await Api().post('/video_plays', { video_id: videoId })
@@ -211,36 +182,6 @@ export default new Vuex.Store({
       } catch {
         return {error: "There was an error.  Please try again."}
       }
-    },
-    async connectTagToVideo({commit}, {tag, video}) {
-      await Api().post('/video_tags', {
-        video_id: video.id,
-        tag_id: tag.id
-      })
-      commit('CONNECT_TAG', { tag, video })
-    },
-    async disconnectTagFromVideo({commit}, {tag, video}) {
-      await Api().post('/video_tags/delete', {
-        video_id: video.id,
-        tag_id: tag.id
-      })
-      commit('DISCONNECT_TAG', { tag, video })
-    },
-    async createTag({commit}, {name}) {
-      let response = await Api().post('/tags', { name })
-      let createdTag = response.data.data.attributes
-      createdTag.id = response.data.data.id
-      createdTag.video_ids = []
-      commit('CREATE_TAG', { tag: createdTag })
-      return createdTag
-    },
-    async updateTagName({commit}, tag) {
-      await Api().put(`/tags/${tag.id}`, tag)
-      commit('UPDATE_TAG_NAME', tag)
-    },
-    async deleteTag({commit}, tag) {
-      await Api().delete(`/tags/${tag.id}`)
-      commit('DELETE_TAG', tag)
     },
   },
 })

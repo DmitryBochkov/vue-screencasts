@@ -4,6 +4,7 @@
       <v-col cols="12">
         <v-tabs>
           <v-tab :to="{ name: 'admin-video-list'}">Videos</v-tab>
+          <v-tab :to="{ name: 'admin-tag-list'}">Tags</v-tab>
           <v-tab :to="{ name: 'admin-user-list'}">Users</v-tab>
         </v-tabs>
       </v-col>

@@ -54,6 +54,11 @@ const routes = [
         name: 'admin-video-create',
         component: () => import(/* webpackChunkName: "adminvideocreate" */ '../views/AdminVideoCreate.vue')
       },
+      {
+        path: 'tags',
+        name: 'admin-tag-list',
+        component: () => import(/* webpackChunkName: "admintaglist" */ '../views/AdminTagList.vue')
+      },
     ]
   },
   {

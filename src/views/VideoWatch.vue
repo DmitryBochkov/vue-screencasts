@@ -22,7 +22,7 @@
           class="my-1 mr-1"
           small
           >
-          {{ getTag(tag_id).name }}
+          {{ getTag(tag_id) && getTag(tag_id).name }}
         </v-btn>
       </span>
       </v-col>

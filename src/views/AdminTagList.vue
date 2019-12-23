@@ -25,6 +25,7 @@
       </div>
       <div class="actions">
         <v-btn x-small  @click="setToEditing(tag)">Edit</v-btn>
+        <v-btn x-small @click="deleteTag(tag)">Delete</v-btn>
         <!-- <v-btn x-small :to="{ name: 'video-watch', params: { id: video.id } }">Watch</v-btn>
         <v-btn x-small :to="{ name: 'admin-video-show', params: { id: video.id } }">Show</v-btn>
         <v-btn x-small @click="deleteVideo(video)">Delete</v-btn> -->
@@ -56,6 +57,12 @@
       updateTagName(tag) {
         this.$store.dispatch('updateTagName', tag)
         this.tagEditingId = ''
+      },
+      deleteTag(tag) {
+        let confirmed = confirm(`Are you sure you want to delete the "${tag.name}" tag? It is connected to ${tag.video_ids.length} videos.`)
+        if (confirmed) {
+          this.$store.dispatch('deleteTag', tag)
+        }
       },
     },
   }

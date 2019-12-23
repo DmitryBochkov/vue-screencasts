@@ -77,6 +77,9 @@ export default new Vuex.Store({
       let tagToUpdade = state.tags.find(t => t.id == tag.id)
       tagToUpdade.name = tag.name
     },
+    DELETE_TAG(state, tag) {
+      state.tags = state.tags.filter(t => t.id != tag.id)
+    },
   },
   actions: {
     async loadVideos({commit}) {
@@ -241,6 +244,10 @@ export default new Vuex.Store({
     async updateTagName({commit}, tag) {
       await Api().put(`/tags/${tag.id}`, tag)
       commit('UPDATE_TAG_NAME', tag)
+    },
+    async deleteTag({commit}, tag) {
+      await Api().delete(`/tags/${tag.id}`)
+      commit('DELETE_TAG', tag)
     },
   },
   modules: {

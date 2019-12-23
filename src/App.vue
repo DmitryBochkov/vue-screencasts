@@ -50,7 +50,7 @@
     computed: {
       ...mapGetters({
         currentUser: 'currentUser',
-        snackbars: 'snackbars'
+        snackbars: 'snackbar/snackbars'
       }),
       ...mapActions({
         loadVideos: 'loadVideos',

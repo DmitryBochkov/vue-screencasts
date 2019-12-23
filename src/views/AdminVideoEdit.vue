@@ -36,7 +36,7 @@
     methods: {
       async editVideo() {
         const video = await this.$store.dispatch('editVideo', this.video)
-        this.$store.dispatch('setSnackbar', { text: `You have successfully edited the video ${video.name}` })
+        this.$store.dispatch('snackbar/setSnackbar', { text: `You have successfully edited the video ${video.name}` })
         this.$router.push({ name: 'admin-video-list' })
       },
     },

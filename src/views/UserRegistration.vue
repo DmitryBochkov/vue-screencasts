@@ -22,9 +22,9 @@
         const user = await this.$store.dispatch('registerUser', registrationInfo)
 
         if (user.error) {
-          this.$store.dispatch('setSnackbar', { text: `${user.error}`, color: 'error' })
+          this.$store.dispatch('snackbar/setSnackbar', { text: `${user.error}`, color: 'error' })
         } else {
-          this.$store.dispatch('setSnackbar', { text: `Welcome to the app, ${user.name}` })
+          this.$store.dispatch('snackbar/setSnackbar', { text: `Welcome to the app, ${user.name}` })
           this.$router.push({ name: 'home' })
         }
       }

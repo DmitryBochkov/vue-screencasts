@@ -53,7 +53,7 @@
         snackbars: 'snackbar/snackbars'
       }),
       ...mapActions({
-        loadVideos: 'loadVideos',
+        loadVideos: 'videos/loadVideos',
         logoutUser: 'logoutUser',
         loadCurrentUser: 'loadCurrentUser',
         loadAllTags: 'tags/loadAllTags',

@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async createVideo() {
-      const video = await this.$store.dispatch('createVideo', this.video)
+      const video = await this.$store.dispatch('videos/createVideo', this.video)
       this.$store.dispatch('snackbar/setSnackbar', { text: `You have successfully created a new video, ${video.name}` })
       this.$router.push({ name: 'video-watch', params: { id: video.id } })
     },

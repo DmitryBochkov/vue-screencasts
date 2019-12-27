@@ -17,7 +17,7 @@
   export default {
     computed: {
       ...mapState({
-        videos: 'videos'
+        videos: state => state.videos.videos
       }),
       ...mapGetters({
         getTag: 'tags/getTag'

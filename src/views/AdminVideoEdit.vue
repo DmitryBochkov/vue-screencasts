@@ -28,14 +28,16 @@
   export default {
     name: 'admin-video-edit',
     computed: {
-      ...mapState(['videos']),
+      ...mapState({
+        videos: state => state.videos.videos
+      }),
       video() {
         return this.videos.find(vid => vid.id == this.$route.params.id) || {}
       }
     },
     methods: {
       async editVideo() {
-        const video = await this.$store.dispatch('editVideo', this.video)
+        const video = await this.$store.dispatch('videos/editVideo', this.video)
         this.$store.dispatch('snackbar/setSnackbar', { text: `You have successfully edited the video ${video.name}` })
         this.$router.push({ name: 'admin-video-list' })
       },

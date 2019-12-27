@@ -25,7 +25,9 @@
   export default {
     name: 'admin-video-list',
     computed: {
-      ...mapState(['videos'])
+      ...mapState({
+        videos: state => state.videos.videos
+      })
     },
     filters: {
       abbreviate(text) {
@@ -39,7 +41,7 @@
       deleteVideo(video) {
         const response = confirm(`Are you sure you want to delete ${video.name}?`)
         if (response) {
-          this.$store.dispatch('deleteVideo', parseInt(video.id))
+          this.$store.dispatch('videos/deleteVideo', parseInt(video.id))
           this.$store.dispatch('snackbar/setSnackbar', { text: `You have successfully deleted your video, ${video.name}` })
         }
       },

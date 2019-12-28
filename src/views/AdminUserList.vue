@@ -11,15 +11,15 @@
   export default {
     computed: {
       ...mapGetters({
-        users: 'users'
+        users: 'users/users'
       })
     },
     mounted() {
-      this.$store.dispatch('loadUsers')
+      this.$store.dispatch('users/loadUsers')
     },
     methods: {
       loginUser(user) {
-        this.$store.dispatch('loginUser', user)
+        this.$store.dispatch('users/loginUser', user)
       }
     }
   }

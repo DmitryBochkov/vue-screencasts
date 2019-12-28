@@ -31,8 +31,8 @@
     computed: {
       ...mapGetters({
         getTag: 'tags/getTag',
-        playedVideos: 'playedVideos',
-        currentUser: 'currentUser',
+        playedVideos: 'users/playedVideos',
+        currentUser: 'users/currentUser',
       }),
       isPlayed() {
         return this.playedVideos.includes(this.video.id)

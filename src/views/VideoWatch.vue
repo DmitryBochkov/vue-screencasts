@@ -46,11 +46,12 @@ export default {
     },
     ...mapGetters({
       getTag: 'tags/getTag',
-      playedVideos: 'playedVideos'
+      playedVideos: 'users/playedVideos',
+      currentUser: 'users/currentUser',
     }),
     ...mapState({
       videos: state => state.videos.videos,
-      currentUser: 'currentUser'
+      // currentUser: state => state.users.currentUser
     }),
     // player() {
     //   return this.$refs.videoPlayer.player
@@ -75,7 +76,7 @@ export default {
   methods: {
     markPlayed() {
       if (!this.isPlayed) {
-        this.$store.dispatch('markPlayed', this.video.id)
+        this.$store.dispatch('users/markPlayed', this.video.id)
       }
     }
   }

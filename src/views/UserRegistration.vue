@@ -19,7 +19,7 @@
     },
     methods: {
       async registerUser(registrationInfo) {
-        const user = await this.$store.dispatch('registerUser', registrationInfo)
+        const user = await this.$store.dispatch('users/registerUser', registrationInfo)
 
         if (user.error) {
           this.$store.dispatch('snackbar/setSnackbar', { text: `${user.error}`, color: 'error' })

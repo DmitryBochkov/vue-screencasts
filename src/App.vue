@@ -49,13 +49,13 @@
     name: 'app',
     computed: {
       ...mapGetters({
-        currentUser: 'currentUser',
+        currentUser: 'users/currentUser',
         snackbars: 'snackbar/snackbars'
       }),
       ...mapActions({
         loadVideos: 'videos/loadVideos',
-        logoutUser: 'logoutUser',
-        loadCurrentUser: 'loadCurrentUser',
+        logoutUser: 'users/logoutUser',
+        loadCurrentUser: 'users/loadCurrentUser',
         loadAllTags: 'tags/loadAllTags',
       })
     },
